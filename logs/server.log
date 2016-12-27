@@ -1,0 +1,6 @@
+2016-12-15 15:59:54 [INFO ] [com.jinyinwu.upstream.agent.nginx.NginxConfigTest:65] - (tomcat001) Locating contexts for http://tomcat001:8080, 2 servers in group
+2016-12-15 15:59:54 [INFO ] [com.jinyinwu.upstream.agent.nginx.NginxConfigTest:65] - (tomcat002) Locating contexts for http://tomcat002:8081, 2 servers in group
+2016-12-15 15:59:54 [WARN ] [com.netflix.config.sources.URLConfigurationSource:120] - No URLs will be polled as dynamic configuration sources.
+2016-12-15 15:59:54 [INFO ] [com.netflix.config.sources.URLConfigurationSource:121] - To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2016-12-15 15:59:54 [INFO ] [com.netflix.config.DynamicPropertyFactory:280] - DynamicPropertyFactory is initialized with configuration sources: com.netflix.config.ConcurrentCompositeConfiguration@1a677343
+2016-12-15 15:59:54 [INFO ] [com.jinyinwu.upstream.agent.nginx.NginxConfigWriter:45] - Flushing NGINX config to 

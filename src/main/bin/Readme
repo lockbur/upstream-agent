@@ -1,0 +1,15 @@
+1 关于shell脚本到linux服务器运行
+bin/sh^M: bad interpreter: No such file or directory解决方法
+2 原因是.sh脚本在windows系统下用记事本文件编写的。不同系统的编码格式引起的。
+3 确保用户对文件有读写及执行权限
+     >#: chmod a+x startup.sh runner.sh shutdown.sh
+4 然后修改文件格式
+    （1）使用vi工具
+       >#: vi runner.sh
+    （2）利用如下命令查看文件格式
+     :set ff 或 :set fileformat
+     可以看到如下信息
+     fileformat=dos 或 fileformat=unix
+     （3） 利用如下命令修改文件格式
+     :set ff=unix 或 :set fileformat=unix
+     :wq (存盘退出)

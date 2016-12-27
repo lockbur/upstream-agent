@@ -1,0 +1,37 @@
+events {
+    worker_connections  4096;
+}
+
+http {
+# ===START UPSTREAMS===
+    {{#clusters}}
+        upstream {{clusterName}} {
+        {{#servers}}
+            server {{host}}:{{port}};
+        {{/servers}}
+        }
+    {{/clusters}}
+# ===END UPSTREAMS===
+
+    server {
+        listen 80;
+        server_name jinyinwu.com;
+
+# ===START LOCATIONS===
+        {{#locations}}
+            location {{context}} {
+            {{#upstream}}
+                proxy_pass              {{protocol}}://{{clusterName}};
+            {{/upstream}}
+            {{#attributes}}
+                {{key}}                 {{value}}
+            {{/attributes}}
+            }
+        {{/locations}}
+# ===END LOCATIONS===
+
+        # Can mix and match hard-coded locations too
+        location /check {
+            return 200 "OK";
+        }
+}
