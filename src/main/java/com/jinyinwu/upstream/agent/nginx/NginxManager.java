@@ -1,22 +1,28 @@
 package com.jinyinwu.upstream.agent.nginx;
 
 import com.google.common.io.CharStreams;
+import com.jinyinwu.upstream.agent.config.AppConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-
+//@Component
 public class NginxManager {
     private static final Logger log = LoggerFactory.getLogger(NginxManager.class);
 
     private final String filename;
 
-    public NginxManager(String filename) throws FileNotFoundException {
-        this.filename = checkNotNull(filename);
+    @Autowired
+    private AppConfig appConfig;
+
+    public NginxManager() throws FileNotFoundException {
+        this.filename = checkNotNull(appConfig.getNginxPidFile());
         new PidReader(filename).getPid();
     }
 

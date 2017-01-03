@@ -7,10 +7,22 @@
 	   http://www.springframework.org/schema/context
 	   http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <context:property-placeholder location="classpath:upstream-agent.properties" ignore-unresolvable="true"/>
+
     <context:annotation-config/>
 
     <context:component-scan base-package="com.jinyinwu.upstream.agent"/>
 
     <bean id="mustacheFactory" class="com.github.mustachejava.DefaultMustacheFactory"></bean>
+
+    <bean id="curatorFramework" class="com.jinyinwu.upstream.agent.spring.CuratorFrameworkFactoryBean">
+        <property name="namespace" value="discovery" />
+        <property name="connectString" value="127.0.0.1:2181" />
+    </bean>
+
+    <bean id="curatorServiceDiscovery" class="com.jinyinwu.upstream.agent.discovery.CuratorServiceDiscoveryFactoryBean">
+        <property name="client" ref="curatorFramework" />
+        <property name="basePath" value="/services" />
+    </bean>
 
 </beans>

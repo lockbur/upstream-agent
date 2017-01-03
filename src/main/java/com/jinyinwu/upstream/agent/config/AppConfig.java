@@ -1,76 +1,77 @@
 package com.jinyinwu.upstream.agent.config;
 
-import com.netflix.config.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
+import java.io.Serializable;
 
-public class AppConfig {
-    protected static final Logger log = LoggerFactory.getLogger(AppConfig.class);
-    protected static boolean initialized = false;
+@Component
+public class AppConfig implements Serializable {
 
-    public static void initializeConfiguration(String configFile) throws IOException {
-        log.info("Initializing config with file=[{}]", configFile);
+    @Value("${zookeeper.quorum}")
+    private String zookeeperQuorum = "";
 
-        if (!initialized) {
-            synchronized (AppConfig.class) {
-                initialized = true;
-//                DynamicPropertyFactory.getInstance();
-                File config = new File(configFile);
+    @Value("${zookeeper.namespace}")
+    private String zookeeperNamespace = "";
 
-                if (!config.exists()) {
-                    throw new IllegalArgumentException("Could not find configuration file! " + config.getAbsolutePath());
-                }
+    @Value("${zookeeper.discoveryPath}")
+    private String zookeeperDiscoveryPath = "";
 
-                ConfigurationManager.loadPropertiesFromConfiguration(new DynamicURLConfiguration(
-                        0, 10000, false, config.toURI().toString()
-                ));
-            }
-        }
+
+    @Value("${nginx.template.file}")
+    private String nginxTemplateFile = "";
+
+    @Value("${nginx.pid.file}")
+    private String nginxPidFile = "";
+
+    @Value("${clusters}")
+    private String clusters = "";
+
+    public String getZookeeperQuorum() {
+        return zookeeperQuorum;
     }
 
-    public static Integer getInt(String property) {
-        final DynamicIntProperty intProperty = DynamicPropertyFactory.getInstance().getIntProperty(property, 0);
-
-        return intProperty.get();
+    public void setZookeeperQuorum(String zookeeperQuorum) {
+        this.zookeeperQuorum = zookeeperQuorum;
     }
 
-    public static Long getLong(String property) {
-        final DynamicLongProperty longProperty = DynamicPropertyFactory.getInstance().getLongProperty(property, 0);
-
-        return longProperty.get();
+    public String getZookeeperNamespace() {
+        return zookeeperNamespace;
     }
 
-    public static Boolean getBoolean(String property) {
-        final DynamicBooleanProperty booleanProperty = DynamicPropertyFactory.getInstance().getBooleanProperty(property, false);
-
-        return booleanProperty.get();
+    public void setZookeeperNamespace(String zookeeperNamespace) {
+        this.zookeeperNamespace = zookeeperNamespace;
     }
 
-    public static Double getDouble(String property) {
-        final DynamicDoubleProperty doubleProperty = DynamicPropertyFactory.getInstance().getDoubleProperty(property, 0.0);
-
-        return doubleProperty.get();
+    public String getZookeeperDiscoveryPath() {
+        return zookeeperDiscoveryPath;
     }
 
-    public static String getString(String property) {
-        final DynamicStringProperty stringProperty = DynamicPropertyFactory.getInstance().getStringProperty(property, "");
-
-        return stringProperty.get();
+    public void setZookeeperDiscoveryPath(String zookeeperDiscoveryPath) {
+        this.zookeeperDiscoveryPath = zookeeperDiscoveryPath;
     }
 
-    public static List<String> getStringList(String property) {
-        final DynamicListProperty<String> listProperty = new DynamicStringListProperty(property, "");
-
-        return listProperty.get();
+    public String getClusters() {
+        return clusters;
     }
 
-    public static void addCallback(String property, Runnable callback) {
-        final DynamicProperty dynamicProperty = DynamicProperty.getInstance(property);
+    public void setClusters(String clusters) {
+        this.clusters = clusters;
+    }
 
-        dynamicProperty.addCallback(callback);
+    public String getNginxTemplateFile() {
+        return nginxTemplateFile;
+    }
+
+    public void setNginxTemplateFile(String nginxTemplateFile) {
+        this.nginxTemplateFile = nginxTemplateFile;
+    }
+
+    public String getNginxPidFile() {
+        return nginxPidFile;
+    }
+
+    public void setNginxPidFile(String nginxPidFile) {
+        this.nginxPidFile = nginxPidFile;
     }
 }

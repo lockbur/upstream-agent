@@ -3,7 +3,9 @@ package com.jinyinwu.upstream.agent.data;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -13,7 +15,7 @@ public class Cluster implements Serializable {
     private final String protocol;
     private final String clusterName;
     private final int port;
-    private final ImmutableSet<Server> servers;
+    private final List<Server> servers;
 
     public Cluster(Builder builder) {
         checkArgument(!Strings.isNullOrEmpty(builder.protocol.trim()), "protocol must be set");
@@ -23,7 +25,7 @@ public class Cluster implements Serializable {
         this.protocol = builder.protocol;
         this.clusterName = builder.clusterName;
         this.port = builder.port;
-        this.servers = ImmutableSet.copyOf(builder.servers);
+        this.servers = new ArrayList<>(builder.servers);
     }
 
     public static Builder builder() {
@@ -75,7 +77,7 @@ public class Cluster implements Serializable {
         return port;
     }
 
-    public ImmutableSet<Server> getServers() {
+    public List<Server> getServers() {
         return servers;
     }
 }

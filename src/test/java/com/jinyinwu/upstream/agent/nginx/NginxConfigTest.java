@@ -9,7 +9,7 @@ import com.jinyinwu.upstream.agent.data.Cluster;
 import com.jinyinwu.upstream.agent.data.Location;
 import com.jinyinwu.upstream.agent.data.RoutingConfiguration;
 import com.jinyinwu.upstream.agent.data.Server;
-import com.jinyinwu.upstream.agent.handler.ConfigWriter;
+import com.jinyinwu.upstream.agent.handler.NginxConfigWriter;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,7 @@ public class NginxConfigTest extends TestBase {
     private static final Logger log = LoggerFactory.getLogger(NginxConfigTest.class);
 
     @Resource
-    private ConfigWriter configWriter;
+    private NginxConfigWriter nginxConfigWriter;
 
     //@Test
     public void test() throws IOException {
@@ -56,7 +56,7 @@ public class NginxConfigTest extends TestBase {
         clusters.add(cluster2);
 
 
-        configWriter.writeConfig(buildConfigContext(clusters));
+        //nginxConfigWriter.writeConfig(buildConfigContext(clusters));
     }
 
     private RoutingConfiguration buildConfigContext(List<Cluster> clusters) {

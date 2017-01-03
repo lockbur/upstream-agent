@@ -18,8 +18,11 @@ public class Bootstrap {
 
         AbstractApplicationContext cxt = new FileSystemXmlApplicationContext("classpath:spring-config.xml");
 
+        final Thread monitor = new StopMonitor(9527);
+        monitor.start();
+        monitor.join();
         //重要  在关闭jvm之前 需要关闭socket.io的服务器
-        logger.info("netty socket.io stopped.");
+        logger.info("monitor stopped.");
         cxt.registerShutdownHook();
     }
 
